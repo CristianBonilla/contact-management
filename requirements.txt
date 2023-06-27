@@ -1,7 +1,9 @@
 anyio @ file:///home/conda/feedstock_root/build_artifacts/anyio_1685486400275/work/dist
 certifi==2023.5.7
+cffi @ file:///Users/runner/miniforge3/conda-bld/cffi_1671179612308/work
 charset-normalizer @ file:///home/conda/feedstock_root/build_artifacts/charset-normalizer_1678108872112/work
 click @ file:///home/conda/feedstock_root/build_artifacts/click_1666798198223/work
+cryptography @ file:///Users/runner/miniforge3/conda-bld/cryptography-split_1685659511778/work
 exceptiongroup @ file:///home/conda/feedstock_root/build_artifacts/exceptiongroup_1678703645500/work
 fastapi @ file:///home/conda/feedstock_root/build_artifacts/fastapi_1687743231321/work
 greenlet @ file:///Users/runner/miniforge3/conda-bld/greenlet_1684083052883/work
@@ -10,6 +12,8 @@ hubspot-api-client==8.0.0
 idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1663625384323/work
 numpy @ file:///Users/runner/miniforge3/conda-bld/numpy_1687056393891/work
 pandas @ file:///Users/runner/miniforge3/conda-bld/pandas_1685343038613/work
+psycopg2 @ file:///Users/runner/miniforge3/conda-bld/psycopg2-split_1672159283461/work
+pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1636257122734/work
 pydantic @ file:///Users/runner/miniforge3/conda-bld/pydantic_1686385867544/work
 PySocks @ file:///home/conda/feedstock_root/build_artifacts/pysocks_1661604839144/work
 python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/python-dateutil_1626286286081/work
