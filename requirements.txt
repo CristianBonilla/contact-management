@@ -1,16 +1,25 @@
 anyio @ file:///home/conda/feedstock_root/build_artifacts/anyio_1685486400275/work/dist
 certifi==2023.5.7
+charset-normalizer @ file:///home/conda/feedstock_root/build_artifacts/charset-normalizer_1678108872112/work
 click @ file:///home/conda/feedstock_root/build_artifacts/click_1666798198223/work
 exceptiongroup @ file:///home/conda/feedstock_root/build_artifacts/exceptiongroup_1678703645500/work
 fastapi @ file:///home/conda/feedstock_root/build_artifacts/fastapi_1687743231321/work
+greenlet @ file:///Users/runner/miniforge3/conda-bld/greenlet_1684083052883/work
 h11 @ file:///home/conda/feedstock_root/build_artifacts/h11_1664132893548/work
 hubspot-api-client==8.0.0
 idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1663625384323/work
+numpy @ file:///Users/runner/miniforge3/conda-bld/numpy_1687056393891/work
+pandas @ file:///Users/runner/miniforge3/conda-bld/pandas_1685343038613/work
 pydantic @ file:///Users/runner/miniforge3/conda-bld/pydantic_1686385867544/work
-python-dateutil==2.8.2
-six==1.16.0
+PySocks @ file:///home/conda/feedstock_root/build_artifacts/pysocks_1661604839144/work
+python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/python-dateutil_1626286286081/work
+pytz @ file:///home/conda/feedstock_root/build_artifacts/pytz_1680088766131/work
+requests @ file:///home/conda/feedstock_root/build_artifacts/requests_1684774241324/work
+six @ file:///home/conda/feedstock_root/build_artifacts/six_1620240208055/work
 sniffio @ file:///home/conda/feedstock_root/build_artifacts/sniffio_1662051266223/work
+SQLAlchemy @ file:///Users/runner/miniforge3/conda-bld/sqlalchemy_1686436718738/work
 starlette @ file:///home/conda/feedstock_root/build_artifacts/starlette-recipe_1684245096404/work
 typing_extensions @ file:///home/conda/feedstock_root/build_artifacts/typing_extensions_1685704949284/work
-urllib3==2.0.3
+tzdata @ file:///home/conda/feedstock_root/build_artifacts/python-tzdata_1680081134351/work
+urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1686156552494/work
 uvicorn @ file:///Users/runner/miniforge3/conda-bld/uvicorn-split_1682667973969/work
