@@ -1,0 +1,16 @@
+anyio @ file:///home/conda/feedstock_root/build_artifacts/anyio_1685486400275/work/dist
+certifi==2023.5.7
+click @ file:///home/conda/feedstock_root/build_artifacts/click_1666798198223/work
+exceptiongroup @ file:///home/conda/feedstock_root/build_artifacts/exceptiongroup_1678703645500/work
+fastapi @ file:///home/conda/feedstock_root/build_artifacts/fastapi_1687743231321/work
+h11 @ file:///home/conda/feedstock_root/build_artifacts/h11_1664132893548/work
+hubspot-api-client==8.0.0
+idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1663625384323/work
+pydantic @ file:///Users/runner/miniforge3/conda-bld/pydantic_1686385867544/work
+python-dateutil==2.8.2
+six==1.16.0
+sniffio @ file:///home/conda/feedstock_root/build_artifacts/sniffio_1662051266223/work
+starlette @ file:///home/conda/feedstock_root/build_artifacts/starlette-recipe_1684245096404/work
+typing_extensions @ file:///home/conda/feedstock_root/build_artifacts/typing_extensions_1685704949284/work
+urllib3==2.0.3
+uvicorn @ file:///Users/runner/miniforge3/conda-bld/uvicorn-split_1682667973969/work
