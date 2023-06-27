@@ -16,8 +16,13 @@ url = URL.create(
 
 engine = create_engine(url)
 
-connection = engine.connect()
-
-Session = sessionmaker(autoflush=False, bind=engine)
+SessionInstance = sessionmaker(autoflush=False, bind=engine)
 
 Base = declarative_base()
+
+def get_session():
+    session = SessionInstance()
+    try:
+        yield session
+    finally:
+        session.close()

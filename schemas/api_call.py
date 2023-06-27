@@ -1,14 +1,14 @@
-from typing import Any
+from typing import Any, Dict
 from datetime import datetime
 from pydantic import BaseModel, Json
 
 class ApiCallBase(BaseModel):
     endpoint: str
-    params: Json[Any] | None = None
+    params: Dict[str, Any] | str | None = None
     result: str | None = None
 
 class ApiCallRequest(ApiCallBase):
-    def __init__(self, params: Json[Any]):
+    def __init__(self, params: Dict[str, Any]):
         self.params = params
 
 class ApiCall(ApiCallBase):
@@ -16,4 +16,4 @@ class ApiCall(ApiCallBase):
     created_at: datetime
 
     class Config:
-        orm_model = True
+        orm_mode = True

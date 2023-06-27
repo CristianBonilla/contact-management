@@ -1,11 +1,11 @@
 from fastapi import APIRouter
 
-contact = APIRouter()
+contact = APIRouter(prefix='/contact')
 
-@contact.post('/contact')
-def add_contact():
+@contact.post('/')
+def add():
     return
 
-@contact.get('/contact')
-def sync_contacts():
+@contact.post('/sync')
+def sync():
     return
