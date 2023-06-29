@@ -113,7 +113,6 @@ class Hubspot:
                 property_name='clickup_state',
                 archived=False
             )
-            print(clickup_state_property)
             return clickup_state_property
         except ApiException as exception:
             if (exception.status == 404):
