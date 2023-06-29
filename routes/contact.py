@@ -12,7 +12,6 @@ contact = APIRouter(prefix='/contact')
 @contact.post('')
 def add_contact(contact_request: ContactRequest, session: Session = Depends(get_session)):
     try:
-        hubspot_repo.load_clickup_state_property()
         hubspot_contact = hubspot_repo.add_contact(contact_request)
         contact_repo.add_contact(session, contact_request)
         return hubspot_contact
