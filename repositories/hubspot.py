@@ -1,6 +1,6 @@
-from typing import List, Dict
+from typing import List
 import hubspot
-from hubspot.crm.contacts import SimplePublicObjectInputForCreate, SimplePublicObjectInput, BatchInputSimplePublicObjectBatchInput
+from hubspot.crm.contacts import SimplePublicObjectInputForCreate, BatchInputSimplePublicObjectBatchInput
 from hubspot.crm.contacts.exceptions import ApiException
 from hubspot.crm.properties import ModelProperty, PropertyCreate
 from schemas.contact import ContactRequest, ClickUpState, UpdateHubspotContacts
@@ -22,32 +22,6 @@ def add_contact(contact_request: ContactRequest, clickup_state = ClickUpState.NO
     try:
         contact = client.crm.contacts.basic_api.create(
             simple_public_object_input_for_create=contact_object
-        )
-        return {
-            'id': contact.id,
-            'properties': contact.properties,
-            'properties_with_history': contact.properties_with_history,
-            'archived': contact.archived,
-            'archived_at': contact.archived_at
-        }
-    except ApiException as exception:
-        raise exception
-
-def update_contact(contact_id: str, contact_request: ContactRequest, clickup_state = ClickUpState.SYNCHRONIZED):
-    contact_object = SimplePublicObjectInput(
-        properties={
-            'email': contact_request.email,
-            'firstname': contact_request.firstname,
-            'lastname': contact_request.lastname,
-            'phone': contact_request.phone,
-            'website': contact_request.website,
-            'clickup_state': clickup_state.value
-        }
-    )
-    try:
-        contact = client.crm.contacts.basic_api.update(
-            contact_id=contact_id,
-            simple_public_object_input=contact_object
         )
         return {
             'id': contact.id,
