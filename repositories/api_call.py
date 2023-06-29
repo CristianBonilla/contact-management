@@ -12,9 +12,3 @@ def add_api_call(session: Session, api_call_request: ApiCallRequest):
     session.commit()
     session.refresh(api_call)
     return api_call
-
-def get_api_call(session: Session, api_call_id: int):
-    return session.query(ApiCall).filter(ApiCall.id == api_call_id).first()
-
-def get_api_calls(session: Session, limit: int = 100):
-    return session.query(ApiCall).limit(limit).all()
