@@ -20,3 +20,7 @@ class Contact(ContactBase):
 
     class Config:
         orm_mode = True
+
+class UpdateHubspotContacts(BaseModel):
+    id: str
+    properties: ContactRequest

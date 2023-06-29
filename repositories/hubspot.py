@@ -1,8 +1,9 @@
+from typing import List, Dict
 import hubspot
-from hubspot.crm.contacts import SimplePublicObjectInputForCreate
+from hubspot.crm.contacts import SimplePublicObjectInputForCreate, SimplePublicObjectInput, BatchInputSimplePublicObjectBatchInput
 from hubspot.crm.contacts.exceptions import ApiException
 from hubspot.crm.properties import ModelProperty, PropertyCreate
-from schemas.contact import ContactRequest, ClickUpState
+from schemas.contact import ContactRequest, ClickUpState, UpdateHubspotContacts
 
 client = hubspot.Client.create(access_token='pat-na1-bfa3f0c0-426b-4f0e-b514-89b20832c96a')
 
@@ -31,6 +32,63 @@ def add_contact(contact_request: ContactRequest, clickup_state = ClickUpState.NO
         }
     except ApiException as exception:
         raise exception
+
+def update_contact(contact_id: str, contact_request: ContactRequest, clickup_state = ClickUpState.SYNCHRONIZED):
+    contact_object = SimplePublicObjectInput(
+        properties={
+            'email': contact_request.email,
+            'firstname': contact_request.firstname,
+            'lastname': contact_request.lastname,
+            'phone': contact_request.phone,
+            'website': contact_request.website,
+            'clickup_state': clickup_state.value
+        }
+    )
+    try:
+        contact = client.crm.contacts.basic_api.update(
+            contact_id=contact_id,
+            simple_public_object_input=contact_object
+        )
+        return {
+            'id': contact.id,
+            'properties': contact.properties,
+            'properties_with_history': contact.properties_with_history,
+            'archived': contact.archived,
+            'archived_at': contact.archived_at
+        }
+    except ApiException as exception:
+        raise exception
+
+def update_contacts(update_contacts: List[UpdateHubspotContacts], clickup_state = ClickUpState.SYNCHRONIZED):
+    update_contacts_object = BatchInputSimplePublicObjectBatchInput(
+        inputs=list(map(
+            lambda contact : {
+                'id': contact.id,
+                'properties': {
+                    'email': contact.properties.email,
+                    'firstname': contact.properties.firstname,
+                    'lastname': contact.properties.lastname,
+                    'phone': contact.properties.phone,
+                    'website': contact.properties.website,
+                    'clickup_state': clickup_state.value
+                }
+            }, update_contacts
+        )))
+    try:
+        contacts = client.crm.contacts.batch_api.update(
+            batch_input_simple_public_object_batch_input=update_contacts_object
+        )
+        return list(map(
+            lambda contact : {
+                'id': contact.id,
+                'properties': contact.properties,
+                'properties_with_history': contact.properties_with_history,
+                'archived': contact.archived,
+                'archived_at': contact.archived_at
+            }, contacts.results
+        ))
+    except ApiException as expression:
+        raise expression
 
 def load_clickup_state_property():
     clickup_state_property: ModelProperty
