@@ -9,5 +9,5 @@ class Contact(Base):
     email = Column(String(255), nullable=False, index=True)
     firstname = Column(String(50), nullable=False)
     lastname = Column(String(50), nullable=False)
-    phone = Column(String(20), nullable=False),
+    phone = Column(String(20), nullable=False)
     website = Column(String(255), nullable=False)
