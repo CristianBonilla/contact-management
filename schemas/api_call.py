@@ -8,8 +8,7 @@ class ApiCallBase(BaseModel):
     result: str | None = None
 
 class ApiCallRequest(ApiCallBase):
-    def __init__(self, params: Dict[str, Any]):
-        self.params = params
+    params: Dict[str, Any]
 
 class ApiCall(ApiCallBase):
     id: int
