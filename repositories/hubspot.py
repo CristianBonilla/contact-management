@@ -1,6 +1,6 @@
 from typing import List
 import hubspot
-from hubspot.crm.contacts import SimplePublicObjectInputForCreate, BatchInputSimplePublicObjectBatchInput
+from hubspot.crm.contacts import SimplePublicObjectInputForCreate, BatchInputSimplePublicObjectBatchInput, PublicObjectSearchRequest
 from hubspot.crm.contacts.exceptions import ApiException
 from hubspot.crm.properties import ModelProperty, PropertyCreate
 from schemas.contact import ContactRequest, ClickUpState, UpdateHubspotContacts
@@ -51,6 +51,44 @@ def update_contacts(update_contacts: List[UpdateHubspotContacts], clickup_state 
     try:
         contacts = client.crm.contacts.batch_api.update(
             batch_input_simple_public_object_batch_input=update_contacts_object
+        )
+        return list(map(
+            lambda contact : {
+                'id': contact.id,
+                'properties': contact.properties,
+                'properties_with_history': contact.properties_with_history,
+                'archived': contact.archived,
+                'archived_at': contact.archived_at
+            }, contacts.results
+        ))
+    except ApiException as expression:
+        raise expression
+
+def search_by_contacts_clickup_state(clickup_state = ClickUpState.NOT_SYNCHRONIZED, limit=100):
+    contact_search = PublicObjectSearchRequest(
+        filter_groups=[
+            {
+                'filters': [
+                    {
+                        'propertyName': 'clickup_state',
+                        'value': clickup_state.value,
+                        'operator': 'EQ'
+                    }
+                ]
+            }
+        ],
+        properties=[
+            'email',
+            'firstname',
+            'lastname',
+            'phone',
+            'website',
+            'clickup_state'
+        ],
+        limit=limit)
+    try:
+        contacts = client.crm.contacts.search_api.do_search(
+            public_object_search_request=contact_search
         )
         return list(map(
             lambda contact : {
