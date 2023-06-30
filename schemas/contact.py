@@ -2,8 +2,8 @@ from enum import Enum
 from pydantic import BaseModel
 
 class ClickUpState(Enum):
-    SYNCHRONIZED=True
-    NOT_SYNCHRONIZED=False
+    SYNCED=True
+    NOT_SYNCED=False
 
 class ContactBase(BaseModel):
     email: str
@@ -21,6 +21,6 @@ class Contact(ContactBase):
     class Config:
         orm_mode = True
 
-class UpdateHubspotContacts(BaseModel):
+class HubspotContact(BaseModel):
     id: str
     properties: ContactRequest

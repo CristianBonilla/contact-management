@@ -1,14 +1,19 @@
 import sys
-import requests
+import json
+import aiohttp
+import asyncio
+from typing import List
 from time import time
-from schemas.contact import ContactBase
+from schemas.contact import HubspotContact
 
 class ClickUp:
     def __init__(self, token: str, list_id: int):
         self.token = token
         self.list_id = list_id
 
-    def create_task(self, contact: ContactBase):
+    async def create_task(self, session: aiohttp.ClientSession, hubspot_contact: HubspotContact):
+        contact_id = hubspot_contact.id
+        contact = hubspot_contact.properties
         try:
             url = 'https://api.clickup.com/api/v2/list/%s/task' % self.list_id
             headers = {
@@ -16,7 +21,7 @@ class ClickUp:
                 'Authorization': self.token
             }
             payload = {
-                'name': 'Contact: %s %s' % (contact.firstname, contact.lastname),
+                'name': 'Contact #%s: %s %s' % (contact_id, contact.firstname, contact.lastname),
                 'description': 'Creating a contact task from hubspot %s %s %s' % (contact.phone, contact.email, contact.website),
                 'assignees': [],
                 'tags': [],
@@ -32,8 +37,18 @@ class ClickUp:
                 'check_required_custom_fields': True,
                 'custom_fields': []
             }
-            task_response = requests.post(url=url, headers=headers, json=payload)
-            task = task_response.json()
-            return task
+            async with session.post(url, json=payload, headers=headers) as task_response:
+                task = await task_response.read()
+                hashrate = json.loads(task)
+                return hashrate
         except:
             raise Exception(sys.exc_info())
+
+    async def create_tasks(self, hubspot_contacts: List[HubspotContact], synced_tasks: List):
+        async with aiohttp.ClientSession() as session:
+            tasks = []
+            for contact in hubspot_contacts:
+                tasks.append(asyncio.ensure_future(self.create_task(session, contact)))
+            synced_tasks.extend(await asyncio.gather(*tasks))
+            for task in synced_tasks:
+                return task
