@@ -3,14 +3,14 @@ import hubspot
 from hubspot.crm.contacts import SimplePublicObjectInputForCreate, BatchInputSimplePublicObjectBatchInput, PublicObjectSearchRequest
 from hubspot.crm.contacts.exceptions import ApiException
 from hubspot.crm.properties import ModelProperty, PropertyCreate
-from schemas.contact import ContactRequest, ClickUpState, UpdateHubspotContacts
+from schemas.contact import ContactRequest, ClickUpState, HubspotContact
 
 class Hubspot:
     def __init__(self, token: str):
         self.client = hubspot.Client.create(access_token=token)
         self.load_clickup_state_property()
 
-    def add_contact(self, contact_request: ContactRequest, clickup_state = ClickUpState.NOT_SYNCHRONIZED):
+    def add_contact(self, contact_request: ContactRequest, clickup_state = ClickUpState.NOT_SYNCED):
         contact_object = SimplePublicObjectInputForCreate(
             properties={
                 'email': contact_request.email,
@@ -36,7 +36,7 @@ class Hubspot:
         except ApiException as exception:
             raise exception
 
-    def update_contacts(self, update_contacts: List[UpdateHubspotContacts], clickup_state = ClickUpState.SYNCHRONIZED):
+    def update_contacts(self, update_contacts: List[HubspotContact], clickup_state = ClickUpState.SYNCED):
         update_contacts_object = BatchInputSimplePublicObjectBatchInput(
             inputs=list(map(
                 lambda contact : {
@@ -67,14 +67,19 @@ class Hubspot:
         except ApiException as expression:
             raise expression
 
-    def search_by_contacts_clickup_state(self, clickup_state = ClickUpState.NOT_SYNCHRONIZED, limit=100):
+    def search_by_contacts_clickup_state(self, clickup_state = ClickUpState.NOT_SYNCED, limit=100):
+        clickup_state_value = str(clickup_state.value).lower()
         contact_search = PublicObjectSearchRequest(
             filter_groups=[
                 {
                     'filters': [
                         {
                             'propertyName': 'clickup_state',
-                            'value': clickup_state.value,
+                            'operator': 'HAS_PROPERTY'
+                        },
+                        {
+                            'propertyName': 'clickup_state',
+                            'value': clickup_state_value,
                             'operator': 'EQ'
                         }
                     ]
@@ -93,6 +98,7 @@ class Hubspot:
             contacts = self.client.crm.contacts.search_api.do_search(
                 public_object_search_request=contact_search
             )
+            contacts_filter = list(filter(lambda contact : contact.properties['clickup_state'] == clickup_state_value, contacts.results))
             return list(map(
                 lambda contact : {
                     'id': contact.id,
@@ -100,7 +106,7 @@ class Hubspot:
                     'properties_with_history': contact.properties_with_history,
                     'archived': contact.archived,
                     'archived_at': contact.archived_at
-                }, contacts.results
+                }, contacts_filter
             ))
         except ApiException as expression:
             raise expression
