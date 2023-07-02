@@ -1,6 +1,6 @@
 from typing import List
 import hubspot
-from hubspot.crm.contacts import SimplePublicObjectInputForCreate, BatchInputSimplePublicObjectBatchInput, PublicObjectSearchRequest
+from hubspot.crm.contacts import SimplePublicObject, SimplePublicObjectInputForCreate, BatchResponseSimplePublicObject, BatchInputSimplePublicObjectBatchInput, PublicObjectSearchRequest, CollectionResponseWithTotalSimplePublicObjectForwardPaging
 from hubspot.crm.contacts.exceptions import ApiException
 from hubspot.crm.properties import ModelProperty, PropertyCreate
 from models.hubspot import HubspotContact, ClickUpState
@@ -24,11 +24,13 @@ class Hubspot:
             associations=[]
         )
         try:
-            contact = self.client.crm.contacts.basic_api.create(
+            contact: SimplePublicObject = self.client.crm.contacts.basic_api.create(
                 simple_public_object_input_for_create=contact_object
             )
             return {
                 'id': contact.id,
+                'created_at': contact.created_at.isoformat(),
+                'updated_at': contact.updated_at.isoformat(),
                 'properties': contact.properties,
                 'properties_with_history': contact.properties_with_history,
                 'archived': contact.archived,
@@ -53,24 +55,31 @@ class Hubspot:
                 }, update_contacts
             )))
         try:
-            contacts = self.client.crm.contacts.batch_api.update(
+            updated_contacts: BatchResponseSimplePublicObject = self.client.crm.contacts.batch_api.update(
                 batch_input_simple_public_object_batch_input=update_contacts_object
             )
+            contacts: List[SimplePublicObject] = updated_contacts.results
             return list(map(
                 lambda contact : {
                     'id': contact.id,
+                    'created_at': contact.created_at.isoformat(),
+                    'updated_at': contact.updated_at.isoformat(),
                     'properties': contact.properties,
                     'properties_with_history': contact.properties_with_history,
                     'archived': contact.archived,
                     'archived_at': contact.archived_at
-                }, contacts.results
+                }, contacts
             ))
         except ApiException as expression:
             raise expression
 
+<<<<<<< Updated upstream
     def search_by_contacts_clickup_state(self, clickup_state = ClickUpState.NOT_SYNCED, limit=100):
+=======
+    def search_contacts_by_clickup_state(self, clickup_state = ClickupState.NOT_SYNCED, limit=100):
+>>>>>>> Stashed changes
         clickup_state_value = str(clickup_state.value).lower()
-        contact_search = PublicObjectSearchRequest(
+        contacts_search_object = PublicObjectSearchRequest(
             filter_groups=[
                 {
                     'filters': [
@@ -96,18 +105,20 @@ class Hubspot:
             ],
             limit=limit)
         try:
-            contacts = self.client.crm.contacts.search_api.do_search(
-                public_object_search_request=contact_search
+            contacts_found: CollectionResponseWithTotalSimplePublicObjectForwardPaging = self.client.crm.contacts.search_api.do_search(
+                public_object_search_request=contacts_search_object
             )
-            contacts_filter = list(filter(lambda contact : contact.properties['clickup_state'] == clickup_state_value, contacts.results))
+            contacts: List[SimplePublicObject] = list(filter(lambda contact : contact.properties['clickup_state'] == clickup_state_value, contacts_found.results))
             return list(map(
                 lambda contact : {
                     'id': contact.id,
+                    'created_at': contact.created_at.isoformat(),
+                    'updated_at': contact.updated_at.isoformat(),
                     'properties': contact.properties,
                     'properties_with_history': contact.properties_with_history,
                     'archived': contact.archived,
                     'archived_at': contact.archived_at
-                }, contacts_filter
+                }, contacts
             ))
         except ApiException as expression:
             raise expression

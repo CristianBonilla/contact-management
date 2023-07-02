@@ -35,7 +35,7 @@ async def add_contact(contact_request: ContactRequest, hubspot: HubspotDependenc
 
 @contact.post('/sync')
 async def sync_contacts(request: Request, hubspot: HubspotDependency, clickup: ClickupDependency, session: SessionDependency):
-    contacts = hubspot.search_by_contacts_clickup_state()
+    contacts = hubspot.search_contacts_by_clickup_state()
     endpoint, params = await get_request(request, 'sync_contacts')
     asyncio.create_task(run_contacts_sync(HubspotToClickup(
         session=session,
