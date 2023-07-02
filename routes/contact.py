@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 from hubspot.crm.contacts.exceptions import ApiException
 from constants.constants import *
 from config.db import get_session
+from utils.http import get_request
 from background_tasks.sync import run_contacts_sync
 from repositories.hubspot import Hubspot
 from repositories.clickup import ClickUp
@@ -34,9 +35,8 @@ async def add_contact(contact_request: ContactRequest, hubspot: HubspotDependenc
 
 @contact.post('/sync')
 async def sync_contacts(request: Request, hubspot: HubspotDependency, clickup: ClickupDependency, session: SessionDependency):
-    endpoint = contact.url_path_for('sync_contacts')
-    params = await request.json()
     contacts = hubspot.search_by_contacts_clickup_state()
+    endpoint, params = await get_request(request, 'sync_contacts')
     asyncio.create_task(run_contacts_sync(HubspotToClickup(
         session=session,
         hubspot=hubspot,
