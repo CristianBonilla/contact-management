@@ -3,7 +3,8 @@ import hubspot
 from hubspot.crm.contacts import SimplePublicObjectInputForCreate, BatchInputSimplePublicObjectBatchInput, PublicObjectSearchRequest
 from hubspot.crm.contacts.exceptions import ApiException
 from hubspot.crm.properties import ModelProperty, PropertyCreate
-from schemas.contact import ContactRequest, ClickUpState, HubspotContact
+from models.hubspot import HubspotContact, ClickUpState
+from schemas.contact import ContactRequest
 
 class Hubspot:
     def __init__(self, token: str):

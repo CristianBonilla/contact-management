@@ -2,7 +2,8 @@ from typing import List, Dict, Any
 from sqlalchemy.orm import Session
 from repositories.hubspot import Hubspot
 from repositories.clickup import ClickUp
-from schemas.contact import ContactBase, HubspotContact
+from models.hubspot import HubspotContact
+from schemas.contact import ContactBase
 
 class ApiCallHubspotToClickup:
     def __init__(self, endpoint: str, params: Dict[str, Any]):
@@ -24,7 +25,8 @@ class HubspotToClickup:
         hubspot: Hubspot,
         clickup: ClickUp,
         api_call: ApiCallHubspotToClickup,
-        data: List[Dict[str, Any]] = []):
+        data: List[Dict[str, Any]] = []
+    ):
         self._session = session
         self._hubspot = hubspot
         self._clickup = clickup

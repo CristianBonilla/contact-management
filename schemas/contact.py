@@ -1,9 +1,4 @@
-from enum import Enum
 from pydantic import BaseModel
-
-class ClickUpState(Enum):
-    SYNCED=True
-    NOT_SYNCED=False
 
 class ContactBase(BaseModel):
     email: str
@@ -20,7 +15,3 @@ class Contact(ContactBase):
 
     class Config:
         orm_mode = True
-
-class HubspotContact(BaseModel):
-    id: str
-    properties: ContactRequest

@@ -2,7 +2,7 @@ import json
 import asyncio
 from typing import Annotated
 from sqlalchemy.orm import Session
-from fastapi import APIRouter, Depends, HTTPException, Request, BackgroundTasks
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import JSONResponse
 from hubspot.crm.contacts.exceptions import ApiException
 from constants.constants import *
@@ -11,8 +11,8 @@ from background_tasks.sync import run_contacts_sync
 from repositories.hubspot import Hubspot
 from repositories.clickup import ClickUp
 import repositories.contact as contact_repo
+from models.sync import HubspotToClickup, ApiCallHubspotToClickup
 from schemas.contact import ContactRequest
-from schemas.sync import HubspotToClickup, ApiCallHubspotToClickup
 
 contact = APIRouter(prefix='/contact')
 

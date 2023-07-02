@@ -4,7 +4,7 @@ import aiohttp
 import asyncio
 from typing import List
 from time import time
-from schemas.contact import HubspotContact
+from models.hubspot import HubspotContact
 
 class ClickUp:
     def __init__(self, token: str, list_id: int):

@@ -1,8 +1,8 @@
 import json
 import asyncio
 import repositories.api_call as api_call_repo
+from models.sync import HubspotToClickup
 from schemas.api_call import ApiCallRequest
-from schemas.sync import HubspotToClickup
 
 def update_hubspot_contacts(hubspot_to_clickup: HubspotToClickup):
     print('Updating contacts state in Hubspot...')
