@@ -11,4 +11,5 @@ def add_api_call(session: Session, api_call_request: ApiCallRequest):
     session.add(api_call)
     session.commit()
     session.refresh(api_call)
+    print('api_call registration was successful #%s' % api_call.id)
     return api_call

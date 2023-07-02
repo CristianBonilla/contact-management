@@ -1,18 +1,26 @@
+from json.decoder import JSONDecodeError
 from starlette.concurrency import iterate_in_threadpool
 from starlette.requests import Request
 from starlette.middleware.base import RequestResponseEndpoint
 
 async def get_request(request: Request, endpoint_from_path_name: str = None):
-    if endpoint_from_path_name and not endpoint_from_path_name.isspace():
-        endpoint = request.url_for(endpoint_from_path_name).path
-    else:
-        endpoint = [route for route in request.scope['router'].routes if route.endpoint == request.scope['endpoint']][0].path
+    try:
+        if endpoint_from_path_name and not endpoint_from_path_name.isspace():
+            endpoint = request.url_for(endpoint_from_path_name).path
+        else:
+            endpoint = [route for route in request.scope['router'].routes if route.endpoint == request.scope['endpoint']][0].path
+    except:
+        endpoint = '/'
     path = request.url.path
     if request.query_params:
         path += f'?{request.query_params}'
+    try:
+        body = await request.json()
+    except JSONDecodeError:
+        body = {}
     params = {
         'path': path,
-        'body': await request.json()
+        'body': body
     }
     return endpoint, params
 
