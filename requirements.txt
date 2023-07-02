@@ -1,4 +1,8 @@
+aiohttp @ file:///Users/runner/miniforge3/conda-bld/aiohttp_1686375940144/work
+aiosignal @ file:///home/conda/feedstock_root/build_artifacts/aiosignal_1667935791922/work
 anyio @ file:///home/conda/feedstock_root/build_artifacts/anyio_1685486400275/work/dist
+async-timeout @ file:///home/conda/feedstock_root/build_artifacts/async-timeout_1640026696943/work
+attrs @ file:///home/conda/feedstock_root/build_artifacts/attrs_1683424013410/work
 certifi==2023.5.7
 cffi @ file:///Users/runner/miniforge3/conda-bld/cffi_1671179612308/work
 charset-normalizer @ file:///home/conda/feedstock_root/build_artifacts/charset-normalizer_1678108872112/work
@@ -6,10 +10,12 @@ click @ file:///home/conda/feedstock_root/build_artifacts/click_1666798198223/wo
 cryptography @ file:///Users/runner/miniforge3/conda-bld/cryptography-split_1685659511778/work
 exceptiongroup @ file:///home/conda/feedstock_root/build_artifacts/exceptiongroup_1678703645500/work
 fastapi @ file:///home/conda/feedstock_root/build_artifacts/fastapi_1687743231321/work
+frozenlist @ file:///Users/runner/miniforge3/conda-bld/frozenlist_1667935707665/work
 greenlet @ file:///Users/runner/miniforge3/conda-bld/greenlet_1684083052883/work
 h11 @ file:///home/conda/feedstock_root/build_artifacts/h11_1664132893548/work
 hubspot-api-client==8.0.0
 idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1663625384323/work
+multidict @ file:///Users/runner/miniforge3/conda-bld/multidict_1672339475162/work
 numpy @ file:///Users/runner/miniforge3/conda-bld/numpy_1687056393891/work
 pandas @ file:///Users/runner/miniforge3/conda-bld/pandas_1685343038613/work
 psycopg2 @ file:///Users/runner/miniforge3/conda-bld/psycopg2-split_1672159283461/work
@@ -27,3 +33,4 @@ typing_extensions @ file:///home/conda/feedstock_root/build_artifacts/typing_ext
 tzdata @ file:///home/conda/feedstock_root/build_artifacts/python-tzdata_1680081134351/work
 urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1686156552494/work
 uvicorn @ file:///Users/runner/miniforge3/conda-bld/uvicorn-split_1682667973969/work
+yarl @ file:///Users/runner/miniforge3/conda-bld/yarl_1685191791125/work
