@@ -1,4 +1,3 @@
-import sys
 import json
 import aiohttp
 import asyncio
@@ -11,7 +10,16 @@ class ClickUp:
         self.token = token
         self.list_id = list_id
 
-    async def create_task(self, session: aiohttp.ClientSession, hubspot_contact: HubspotContact):
+    async def create_tasks(self, hubspot_contacts: List[HubspotContact], synced_tasks: List):
+        async with aiohttp.ClientSession() as session:
+            tasks = []
+            for contact in hubspot_contacts:
+                tasks.append(asyncio.ensure_future(self._create_task(session, contact)))
+            synced_tasks.extend(await asyncio.gather(*tasks))
+            for task in synced_tasks:
+                return task
+
+    async def _create_task(self, session: aiohttp.ClientSession, hubspot_contact: HubspotContact):
         contact_id = hubspot_contact.id
         contact = hubspot_contact.properties
         try:
@@ -41,14 +49,5 @@ class ClickUp:
                 task = await task_response.read()
                 hashrate = json.loads(task)
                 return hashrate
-        except:
-            raise Exception(sys.exc_info())
-
-    async def create_tasks(self, hubspot_contacts: List[HubspotContact], synced_tasks: List):
-        async with aiohttp.ClientSession() as session:
-            tasks = []
-            for contact in hubspot_contacts:
-                tasks.append(asyncio.ensure_future(self.create_task(session, contact)))
-            synced_tasks.extend(await asyncio.gather(*tasks))
-            for task in synced_tasks:
-                return task
+        except Exception as exception:
+            raise exception
