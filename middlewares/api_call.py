@@ -2,7 +2,7 @@ from starlette.types import Message
 from starlette.requests import Request
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from fastapi import FastAPI
-from config.db import SessionInstance
+from config.db import get_session
 from utils.http import get_request, get_response
 import repositories.api_call as api_call_repo
 from schemas.api_call import ApiCallRequest
@@ -10,7 +10,7 @@ from schemas.api_call import ApiCallRequest
 class ApiCallMiddleware(BaseHTTPMiddleware):
     def __init__(self, app: FastAPI):
         super().__init__(app)
-        self.session = SessionInstance()
+        self.session = next(get_session())
 
     async def set_body(self, request: Request):
         receive_ = await request._receive()
