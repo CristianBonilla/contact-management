@@ -1,7 +1,7 @@
 from enum import Enum
 from schemas.contact import ContactRequest
 
-class ClickUpState(Enum):
+class ClickupState(Enum):
     SYNCED=True
     NOT_SYNCED=False
 

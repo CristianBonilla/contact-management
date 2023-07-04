@@ -5,7 +5,7 @@ from typing import List
 from time import time
 from models.hubspot import HubspotContact
 
-class ClickUp:
+class Clickup:
     def __init__(self, token: str, list_id: int):
         self.token = token
         self.list_id = list_id

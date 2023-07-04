@@ -3,7 +3,7 @@ import hubspot
 from hubspot.crm.contacts import SimplePublicObject, SimplePublicObjectInputForCreate, BatchResponseSimplePublicObject, BatchInputSimplePublicObjectBatchInput, PublicObjectSearchRequest, CollectionResponseWithTotalSimplePublicObjectForwardPaging
 from hubspot.crm.contacts.exceptions import ApiException
 from hubspot.crm.properties import ModelProperty, PropertyCreate
-from models.hubspot import HubspotContact, ClickUpState
+from models.hubspot import HubspotContact, ClickupState
 from schemas.contact import ContactRequest
 
 class Hubspot:
@@ -11,7 +11,7 @@ class Hubspot:
         self.client = hubspot.Client.create(access_token=token)
         self.load_clickup_state_property()
 
-    def add_contact(self, contact_request: ContactRequest, clickup_state = ClickUpState.NOT_SYNCED):
+    def add_contact(self, contact_request: ContactRequest, clickup_state = ClickupState.NOT_SYNCED):
         contact_object = SimplePublicObjectInputForCreate(
             properties={
                 'email': contact_request.email,
@@ -39,7 +39,7 @@ class Hubspot:
         except ApiException as exception:
             raise exception
 
-    def update_contacts(self, update_contacts: List[HubspotContact], clickup_state = ClickUpState.SYNCED):
+    def update_contacts(self, update_contacts: List[HubspotContact], clickup_state = ClickupState.SYNCED):
         update_contacts_object = BatchInputSimplePublicObjectBatchInput(
             inputs=list(map(
                 lambda contact : {
@@ -73,11 +73,7 @@ class Hubspot:
         except ApiException as expression:
             raise expression
 
-<<<<<<< Updated upstream
-    def search_by_contacts_clickup_state(self, clickup_state = ClickUpState.NOT_SYNCED, limit=100):
-=======
     def search_contacts_by_clickup_state(self, clickup_state = ClickupState.NOT_SYNCED, limit=100):
->>>>>>> Stashed changes
         clickup_state_value = str(clickup_state.value).lower()
         contacts_search_object = PublicObjectSearchRequest(
             filter_groups=[

@@ -10,7 +10,7 @@ from config.db import get_session
 from utils.http import get_request
 from background_tasks.sync import run_contacts_sync
 from repositories.hubspot import Hubspot
-from repositories.clickup import ClickUp
+from repositories.clickup import Clickup
 import repositories.contact as contact_repo
 from models.sync import HubspotToClickup, ApiCallHubspotToClickup
 from schemas.contact import ContactRequest
@@ -19,7 +19,7 @@ contact = APIRouter(prefix='/contact')
 
 SessionDependency = Annotated[Session, Depends(get_session)]
 HubspotDependency = Annotated[Hubspot, Depends(lambda : Hubspot(HUBSPOT_TOKEN))]
-ClickupDependency = Annotated[ClickUp, Depends(lambda : ClickUp(CLICKUP_TOKEN, CLICKUP_LIST_ID))]
+ClickupDependency = Annotated[Clickup, Depends(lambda : Clickup(CLICKUP_TOKEN, CLICKUP_LIST_ID))]
 
 @contact.post('')
 async def add_contact(contact_request: ContactRequest, hubspot: HubspotDependency, session: SessionDependency):

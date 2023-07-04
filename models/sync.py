@@ -1,7 +1,7 @@
 from typing import List, Dict, Any
 from sqlalchemy.orm import Session
 from repositories.hubspot import Hubspot
-from repositories.clickup import ClickUp
+from repositories.clickup import Clickup
 from models.hubspot import HubspotContact
 from schemas.contact import ContactBase
 
@@ -23,7 +23,7 @@ class HubspotToClickup:
         self,
         session: Session,
         hubspot: Hubspot,
-        clickup: ClickUp,
+        clickup: Clickup,
         api_call: ApiCallHubspotToClickup,
         data: List[Dict[str, Any]] = []
     ):
@@ -42,7 +42,7 @@ class HubspotToClickup:
         return self._hubspot
 
     @property
-    def clickup(self) -> ClickUp:
+    def clickup(self) -> Clickup:
         return self._clickup
 
     @property
